@@ -1,3 +1,4 @@
+
 def parse_input(input_str):
     exec_type = 'program'
     args = ''
@@ -34,6 +35,10 @@ def parse_input(input_str):
     '''
     return launch_profile
 
-if __name__ == '__main__':
+def main():
     import sys
     print(parse_input(sys.argv[1]))
+
+    
+if __name__ == '__main__':
+    main()
