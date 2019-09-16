@@ -5,7 +5,7 @@ setup(
     py_modules=['vsdebug'],
     entry_points={
         'console_scripts': [
-            'vsdebug = vsdebug:parse_input',
+            'vsdebug = vsdebug:main',
         ],
     }
 )
