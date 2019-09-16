@@ -2,6 +2,7 @@
 def parse_input(input_str):
     exec_type = 'program'
     args = ''
+    name = ''
 
     s = input_str.split(' ')
 
@@ -19,6 +20,9 @@ def parse_input(input_str):
             
             if not s[i+1].startswith('--'):
                 args += f'"{s[i+1]}",'
+
+    if not name:
+        raise ValueError('Input must contain python command')
 
     launch_profile = f'''
     {{
@@ -39,6 +43,6 @@ def main():
     import sys
     print(parse_input(sys.argv[1]))
 
-    
+
 if __name__ == '__main__':
     main()
