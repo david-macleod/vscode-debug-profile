@@ -1,10 +1,10 @@
 # vscode-debug-profile
 Convert command line args to vscode debugger launch profile
 
-Install
+**Install**
 `pip install git+https://github.com/david-macleod/vscode-debug-profile`
 
-Run
+**Run**
 `vsdebug 'python myfile.py --arg1 val --arg2 --arg3 val2'`
 ```
     {
