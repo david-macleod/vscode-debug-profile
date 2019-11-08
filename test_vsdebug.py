@@ -1,13 +1,6 @@
 from vsdebug import parse_parts, split_input
 
 
-def test_python():
-    input_str = "python3 code.py --param1=1  --param2=2 --param3 3"
-
-    #parse_input(input_str)
-    assert True
-
-
 class Test_split_input:
 
     def test_simple(self):
@@ -28,6 +21,12 @@ class Test_split_input:
         result = split_input(input_str)
         assert ref == result
 
+    def test_bracket(self):
+        input_str = '--a=$(a b = )'
+        ref = ["--a", "$(a b = )"]
+        result = split_input(input_str)
+        assert ref == result
+
 class Test_parse_parts:
 
     def test_program(self):
@@ -40,5 +39,11 @@ class Test_parse_parts:
     def test_module(self):
         parts = ["python3", "-m", "package.code", "--param1", "1", "--param2", "--param3", "3"]
         ref = ("module", "package.code", ['"--param1", "1",', '"--param2",', '"--param3", "3",'])
+        result = parse_parts(parts)
+        assert ref == result
+
+    def test_final_single(self):
+        parts = ['python3', 'code.py', '--param1']
+        ref = ("program", "code.py", ['"--param1",'])
         result = parse_parts(parts)
         assert ref == result

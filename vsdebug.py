@@ -19,7 +19,7 @@ def parse_parts(s):
 
         elif s[i].startswith('--'):
 
-            if not s[i+1].startswith('--'):                
+            if i+1 != len(s)and not s[i+1].startswith('--'):                
                 arg_offset = 1
                 arg = f'"{s[i]}", "{s[i+arg_offset]}",'
             else:
@@ -30,45 +30,21 @@ def parse_parts(s):
             i += arg_offset + 1
 
     return exec_type, name, args
-            
-
-
-             
-            # args += f'\n            "{s[i]}", '
-            
-            # if i+1 < len(s) and not s[i+1].startswith('--'):
-            #     args += f'"{s[i+1]}",'
-
-    return name, exec_type, args
-    # if not name:
-    #     raise ValueError('Input must contain python command')
-
-    # launch_profile = f'''
-    # {{
-    #     "name": "Python: Debug profile",
-    #     "type": "python",
-    #     "request": "launch",
-    #     "{exec_type}": "{name}",
-    #     "console": "integratedTerminal",
-    #     "cwd": "${{workspaceFolder}}",
-    #     "justMyCode": false,
-    #     "args": [{args}
-    #     ]
-    # }},
-    # '''
-    # return launch_profile
 
 def split_input(s):
     # can we use a regex instead? 🤔
     parts = []
     quote = ''
+    bracket = ''
     part = ''
 
     for i in range(len(s)):
-        if quote:
+        if quote or bracket:
             part += s[i]
             if s[i] == quote:
                 quote = ''
+            if s[i] == ')':
+                bracket = ''
         elif s[i] in ' =':
             if part:
                 parts.append(part)
@@ -77,6 +53,8 @@ def split_input(s):
             part += s[i] 
             if s[i] in '\'"':
                 quote = s[i]
+            if s[i] in '(':
+                bracket = s[i]
 
     if part:
         parts.append(part)
